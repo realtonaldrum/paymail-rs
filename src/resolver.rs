@@ -13,7 +13,7 @@ pub struct DefaultResolver;
 impl Resolver for DefaultResolver {
     async fn resolve_host(&self, domain: &str) -> Result<(String, u16), PaymailError> {
         let resolver =
-            TokioAsyncResolver::tokio(ResolverConfig::default(), ResolverOpts::default());
+            TokioAsyncResolver::tokio(ResolverConfig::cloudflare(), ResolverOpts::default());
         let srv_query = format!("_bsvalias._tcp.{}", domain);
         #[allow(clippy::collapsible_if)]
         if let Ok(srv) = resolver.srv_lookup(&srv_query).await {
